@@ -30,10 +30,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
@@ -43,14 +42,9 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalTextApi::class)
 @Composable
-@Preview(showBackground = true)
 fun CountDownView(modifier: Modifier = Modifier) {
-    ScrollSelector(
-        persistentListOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"),
-        onItemSelected = { index, content -> }
-    )
+    CountDownTimer()
 }
 
 @OptIn(ExperimentalTextApi::class)
@@ -140,16 +134,7 @@ fun ScrollSelector(
             ),
             state = state
         ) {
-            item {
-                Spacer(
-                    modifier = Modifier.size(
-                        width = 42.dp,
-                        height = with(density) {
-                            contentHeight.toDp()
-                        }
-                    )
-                )
-            }
+            item { Space(density, contentHeight) }
             items(
                 count = items.size,
                 key = { items[it] }
@@ -173,16 +158,19 @@ fun ScrollSelector(
                     )
                 }
             }
-            item {
-                Spacer(
-                    modifier = Modifier.size(
-                        width = 42.dp,
-                        height = with(density) {
-                            contentHeight.toDp()
-                        }
-                    )
-                )
-            }
+            item { Space(density, contentHeight) }
         }
     }
+}
+
+@Composable
+private fun Space(density: Density, contentHeight: Float) {
+    Spacer(
+        modifier = Modifier.size(
+            width = 42.dp,
+            height = with(density) {
+                contentHeight.toDp()
+            }
+        )
+    )
 }
