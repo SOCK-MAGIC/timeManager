@@ -69,7 +69,7 @@ fun HomeView(
         homeViewModel.sendUIIntent(UIIntent.ChangeLoadingState(false))
     }
     Column(
-        modifier = Modifier
+        modifier = modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
             .padding(10.dp)
